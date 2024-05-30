@@ -25,6 +25,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	int sizeImgCatWidth = 300, sezeImgCatHeight = 300;
 	int catX = 0, catY = 400;
 
+	//音声関係を読み込み
+	int bgm = LoadSoundMem("sounds/audiostock_48704.wav");
+	int se = LoadSoundMem("sounds/poka01.mp3");
+	ChangeVolumeSoundMem(128, bgm);
+	PlaySoundMem(bgm, DX_PLAYTYPE_LOOP);		//ループ再生
+
 
 	while (1) {
 		//画面をクリアする
@@ -48,6 +54,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		DrawFormatString(400, 0, WHITE, "(%d,%d)", mouseX, mouseY);
 		if (GetMouseInput() & MOUSE_INPUT_LEFT)DrawString(400, 20, "左ボタン", WHITE);
 		if (GetMouseInput() & MOUSE_INPUT_RIGHT)DrawString(400, 40, "右ボタン", WHITE);
+		
+		//左クリックでSEを鳴らす
+		if (GetMouseInput() & MOUSE_INPUT_LEFT) PlaySoundMem(se, DX_PLAYTYPE_BACK);
 
 		catX = mouseX - sizeImgCatWidth / 2;
 		catY = mouseY - sezeImgCatHeight / 2;
